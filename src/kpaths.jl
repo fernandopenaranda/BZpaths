@@ -49,7 +49,7 @@ function plot_kpath(lat_vectors, sgnum, N, high_sym_path::Vector = [])
             lbl = high_sym_path
             nkp = custom_path(high_sym_path, kp)
         end
-        ws = cartesianize(wignerseitz(dualbasis(Rs)))
+        ws = cartesianize(wignerseitz(dualbasis(lat_vectors)))
         cartesianize!(nkp)
         kpoints = interpolate(nkp, N)
         fig = Figure()

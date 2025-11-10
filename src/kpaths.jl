@@ -113,10 +113,10 @@ function plot_observable_in_kpath!(ax, obs::Function, lat_vectors, sgnum::Int64,
     if isempty(high_sym_path) == true
         kp = irrfbz_path(sgnum, lat_vectors)
         ks, pos, _ = kpath(lat_vectors, sgnum, N,  kp.paths[1]; return_positions = true)
-        return plot_observable_in_kpath(obs, ks, pos, kp.paths[1])
+        return plot_observable_in_kpath!(ax, obs, ks, pos, kp.paths[1])
     else
         ks, pos, _ = kpath(lat_vectors, sgnum, N, high_sym_path; return_positions = true)
-        return plot_observable_in_kpath(ax, obs, ks, pos, high_sym_path)
+        return plot_observable_in_kpath!(ax, obs, ks, pos, high_sym_path)
     end
 end
 

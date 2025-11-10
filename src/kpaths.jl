@@ -109,6 +109,32 @@ function plot_observable_in_kpath(obs::Function, ks, pos::Vector, high_sym_momen
     fig
 end
 
+function plot_observable_in_kpath!(ax, obs::Function, lat_vectors, sgnum::Int64, N, high_sym_path::Vector = [])
+    if isempty(high_sym_path) == true
+        kp = irrfbz_path(sgnum, lat_vectors)
+        ks, pos, _ = kpath(lat_vectors, sgnum, N,  kp.paths[1]; return_positions = true)
+        return plot_observable_in_kpath(obs, ks, pos, kp.paths[1])
+    else
+        ks, pos, _ = kpath(lat_vectors, sgnum, N, high_sym_path; return_positions = true)
+        return plot_observable_in_kpath(ax, obs, ks, pos, high_sym_path)
+    end
+end
+
+function plot_observable_in_kpath!(ax, obs::Function, ks, pos::Vector, high_sym_momenta; xlab = "", ylims = nothing, xlims = nothing, color = :black)
+    lines!(ax, [obs(k) for k in ks], color = color)
+    ax.xticks = (sort(pos), string.(high_sym_momenta))
+    if ylims == nothing
+        nothing
+    else
+        ylims!(ax, ylims)
+    end
+    if xlims ==nothing
+        nothing
+    else  
+        xlims!(ax, xlims)
+    end
+end
+
 
 #= usage
 1) Define the real space lattice vectors. They could be 3d or 2d
